@@ -1,0 +1,14 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background: #f9f9f9;
+    margin-bottom: 120px;
+}
+
+nav.bg-dark {
+    background-color: #222f3e !important;
+}
+

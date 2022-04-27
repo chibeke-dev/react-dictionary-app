@@ -1,0 +1,22 @@
+import React, {Component} from 'react'
+import {Container} from 'reactstrap'
+import Header from './Header'
+
+
+class Layout extends Component {
+
+    render() {
+        return(
+            <div>
+                <Header />
+                    <Container fluid>
+                        { this.props.children }
+                    </Container>
+                
+            </div>
+        )
+    }
+
+}
+
+export default Layout
