@@ -1,14 +1,31 @@
-html {
-    position: relative;
-    min-height: 100%;
-}
 
 body {
-    background: #f9f9f9;
-    margin-bottom: 120px;
+    margin: 0;
 }
 
-nav.bg-dark {
-    background-color: #222f3e !important;
+main {
+    margin: 16px;
 }
 
+.header{
+    display: flex;
+    align-items: center;
+    background: #222f3e;
+    color: white;
+    font-family: Helvetica;
+    font-weight: 300;
+}
+
+.navbar__title {
+    margin-right: auto;
+    font-size: 150%;
+    padding: 12px 16px;
+    
+    
+}
+
+.navbar__item {
+    padding: 16px 16px;
+    cursor: pointer;
+    vertical-align: middle;
+}
