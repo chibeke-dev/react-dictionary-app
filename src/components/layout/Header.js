@@ -20,8 +20,10 @@ class Header extends Component {
             </div>
             <div className='navbar__item'>Home</div>
             <div className='navbar__item'>About</div>
-            <div className='navbar__item'>Contact</div>
-            <div className='navbar__item'>Help</div>         
+            <div className='navbar__item'>Translator</div>
+            <div className='navbar__item'>Word puzzle</div>
+            <div className='navbar__item'>Kiddies Center</div> 
+            <div className='navbar__item'>Help</div>            
         </Navbar>
         )
     }

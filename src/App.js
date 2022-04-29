@@ -1,4 +1,5 @@
 import Layout from './components/layout/Layout';
+import Dictionary from './components/search/Dictionary'
 
 import './App.css';
 
@@ -6,7 +7,10 @@ function App() {
   return (
     <div className="App">
     
-      <Layout/>  
+      <Layout/> 
+      <main>
+          <Dictionary  />
+        </main> 
      
     </div>
   );
