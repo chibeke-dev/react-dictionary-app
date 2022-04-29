@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 import Kiddies from './pages/Kiddies';
 import Translator from './pages/Translator';
 import About from './pages/About';
@@ -14,13 +14,16 @@ function App() {
   return (
 
     <Switch> 
-    <Route exact
-    path="/" component={props => <Home {...props} />} />
-    <Route exact path="/about" component= {About } />
-    <Route exact path="/translator" component={Translator}/>
-    <Route exact path="/puzzle" component={Puzzle}/>
-     <Route exact path="/kiddies" component={Kiddies}/>
-     <Route exact path="/help" component={Help}/>
+    <Route 
+    path="/" exact component={Home } />
+    <Route  path="/about" component= {About } />
+    <Route  path="/translator" component={Translator}/>
+    <Route  path="/puzzle" component={Puzzle}/>
+     <Route  path="/kiddies" component={Kiddies}/>
+     <Route path="/help">
+              <Help />
+            </Route>
+     <Redirect to="/" />
      </Switch>
    
   );
