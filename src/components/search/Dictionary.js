@@ -1,46 +1,73 @@
-
-import React, {useState} from "react";
-
+import { React, useState } from "react";
+import Axios from "axios";
 import "./Dictionary.css";
+import { FaSearch } from "react-icons/fa";
+import { FcSpeaker } from "react-icons/fc";
 
-export default function Dictionary(props){
-    
-    let [loaded, setLoaded] = useState("false");
-    
+function Dictionary() {
+// Setting up the initial states using react hook 'useState'
+const [data, setData] = useState("");
+const [searchWord, setSearchWord] = useState("");
 
-
-    
-    
-
-    function handleSubmit(event){
-        event.preventDefault();
-        
-    }
-
-    
-
-    function load(){
-        setLoaded(true);
-        
-        }
-    
-        if (loaded){
-    return (
-     <div className="Dictionary">
-         <section>
-             <h1>Search for words here</h1>
-       <form onSubmit={handleSubmit}>
-           <input type="search" />
-       
-       </form>
-       <div className="hint">
-           Suggested words: Hello, School, Continent
-       </div>
-       </section>
-    </div>
-    );
-} else{
-    load();
-    return "Loading...";
+// Implementing Api
+function getMeaning() {
+	Axios.get(
+	`https://api.dictionaryapi.dev/api/v2/entries/en_US/${searchWord}`
+	).then((response) => {
+	setData(response.data[0]);
+	});
 }
+// Function to play and listen the
+// phonetics of the searched word
+function playAudio() {
+	let audio = new Audio(data.phonetics[0].audio);
+	audio.play();
 }
+return (
+	<div className="Dictionary">
+	<h1>Search for words</h1>
+	<div className="searchBox">
+		<input
+		type="text"
+		placeholder="Search..."
+		onChange={(e) => {
+			setSearchWord(e.target.value);
+		}}
+		/>
+		<button
+		onClick={() => {
+			getMeaning();
+		}}
+		>
+		<FaSearch size="20px" />
+		</button>
+	</div>
+	{data && (
+		<div className="showResults">
+		<h2>
+			{data.word}{" "}
+			<button
+			onClick={() => {
+				playAudio();
+			}}
+			>
+			<FcSpeaker size="26px" />
+			</button>
+		</h2>
+		<h4>Parts of speech:</h4>
+		
+<p>{data.meanings[0].partOfSpeech}</p>
+
+		<h4>Definition:</h4>
+		
+<p>{data.meanings[0].definitions[0].definition}</p>
+
+		<h4>Example:</h4>
+		
+<p>{data.meanings[0].definitions[0].example}</p>
+		</div>
+	)}
+	</div>
+);
+}
+export default Dictionary;

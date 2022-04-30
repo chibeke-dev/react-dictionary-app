@@ -8,7 +8,7 @@ export default function Home() {
     <Layout/>
 
     <main>
-      <Dictionary/>
+      <Dictionary />
     </main>
     </div>
   )
