@@ -1,22 +1,3 @@
-// import React, {Component} from 'react'
-// import {Navbar} from 'react-bootstrap'
-// import  './Layout.css'
-// import logo from '../../Icon.png'
-// import { Link} from "react-router-dom"
-
-// class Header extends Component {
-//     render() {
-//         return(
-//             // Navbar section
-            
-        
-//         )
-//     }
-
-// }
-
-// export default Header
-
 import React from 'react'
 import {Navbar} from 'react-bootstrap'
 import  './Layout.css'
