@@ -8,7 +8,7 @@ export default function Home() {
     <Layout/>
 
     <main>
-      <Dictionary />
+    <Dictionary defaultKeyword="welcome" />
     </main>
     </div>
   )

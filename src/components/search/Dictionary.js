@@ -1,73 +1,69 @@
-import { React, useState } from "react";
-import Axios from "axios";
+import React, { useState } from "react";
+import axios from "axios";
+import Results from "./Results";
+import Photos from "./Photos";
+
 import "./Dictionary.css";
-import { FaSearch } from "react-icons/fa";
-import { FcSpeaker } from "react-icons/fc";
 
-function Dictionary() {
-// Setting up the initial states using react hook 'useState'
-const [data, setData] = useState("");
-const [searchWord, setSearchWord] = useState("");
+export default function Dictionary(props){
+    let [keyword, setKeyword] = useState(props.defaultKeyword);
+    let [results, setResults] = useState(null);
+    let [loaded, setLoaded] = useState("false");
+    let [photos, setPhotos] = useState(null);
 
-// Implementing Api
-function getMeaning() {
-	Axios.get(
-	`https://api.dictionaryapi.dev/api/v2/entries/en_US/${searchWord}`
-	).then((response) => {
-	setData(response.data[0]);
-	});
+    function handleDictionResponse(response){
+        setResults(response.data[0]);
+    }
+
+    function handlePexelsResponse(response){
+       setPhotos(response.data.photos);
+    }
+
+    function search(){
+        //documentation: https://dictionaryapi.dev/
+        const apiUrl= `https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`;
+        axios.get(apiUrl).then(handleDictionResponse);
+
+        const pexelsApiKey="563492ad6f917000010000019221e29b01444319b67a453acdee8540";
+        let pexelsApiUrl= `https://api.pexels.com/v1/search?query=${keyword}&per_page=9`;
+        let headers= {"Authorization" : `Bearer ${pexelsApiKey}`};
+
+        axios.get(pexelsApiUrl, { headers: headers}).then(handlePexelsResponse);
+    }
+    
+    function handleSubmit(event){
+        event.preventDefault();
+        search();
+    }
+
+    function handleKeywordChange(event){
+        setKeyword(event.target.value);
+    }
+
+    function load(){
+    setLoaded(true);
+    search();
+    }
+
+    if (loaded){
+    return (
+     <div className="Dictionary">
+         <section>
+             <h1>Look up for words</h1>
+       <form onSubmit={handleSubmit}>
+           <input type="search" onChange={handleKeywordChange} defaultValue={props.defaultKeyword}/>
+       
+       </form>
+       <div className="hint">
+           Suggested words: hello, school, computer
+       </div>
+       </section>
+       <Results results={results}/>
+       <Photos photos={photos} />
+    </div>
+    );
+} else{
+    load();
+    return "Loading...";
 }
-// Function to play and listen the
-// phonetics of the searched word
-function playAudio() {
-	let audio = new Audio(data.phonetics[0].audio);
-	audio.play();
 }
-return (
-	<div className="Dictionary">
-	<h1>Search for words</h1>
-	<div className="searchBox">
-		<input
-		type="text"
-		placeholder="Search..."
-		onChange={(e) => {
-			setSearchWord(e.target.value);
-		}}
-		/>
-		<button
-		onClick={() => {
-			getMeaning();
-		}}
-		>
-		<FaSearch size="20px" />
-		</button>
-	</div>
-	{data && (
-		<div className="showResults">
-		<h2>
-			{data.word}{" "}
-			<button
-			onClick={() => {
-				playAudio();
-			}}
-			>
-			<FcSpeaker size="26px" />
-			</button>
-		</h2>
-		<h4>Parts of speech:</h4>
-		
-<p>{data.meanings[0].partOfSpeech}</p>
-
-		<h4>Definition:</h4>
-		
-<p>{data.meanings[0].definitions[0].definition}</p>
-
-		<h4>Example:</h4>
-		
-<p>{data.meanings[0].definitions[0].example}</p>
-		</div>
-	)}
-	</div>
-);
-}
-export default Dictionary;
