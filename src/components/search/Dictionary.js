@@ -48,8 +48,8 @@ export default function Dictionary(props){
     if (loaded){
     return (
      <div className="Dictionary">
-         <section>
-             <h1>Look up for words</h1>
+         <section style={{marginTop:"100px"}}>
+             <h1>Look up for words here</h1>
        <form onSubmit={handleSubmit}>
            <input type="search" onChange={handleKeywordChange} defaultValue={props.defaultKeyword}/>
        
